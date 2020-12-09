@@ -19,7 +19,7 @@
             let response;
 
             const proxyurl = "https://cors-anywhere.herokuapp.com/";
-            let cities = ['Q90', 'Q8848', 'Q456','Q175081'/]
+            let cities = ['Q90', 'Q8848', 'Q456','Q175081']
             let cities_name = ['paris', 'valence', 'lyon','gap'];
             cities.forEach(async (city, index) => {
                 await fetch(proxyurl +'https://www.wikidata.org/w/api.php?format=json&action=wbgetclaims&property=P18&entity='+ city)
@@ -36,7 +36,6 @@
                     src:'https://commons.wikimedia.org/wiki/Special:FilePath/'+ photo +'?width=320 320w',
                     style: 'background-size: cover;'}))
             });
-            
         }
 
         get_photos_with_wikidata();
