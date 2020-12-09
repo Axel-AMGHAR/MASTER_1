@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div class="photos"></div>
+    </body>
+    <script>
+
+        /* TODO
+        *   get the list code and call fetch, return the url of the image
+        *   save everytime there is a new code city (try localstorage)
+        *   if the city code exist, don't fetch, but show the url
+        * */
+        function get_photos_with_wikidata(){
+            let response;
+
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
+            let cities = ['Q90', 'Q8848', 'Q456','Q175081'/]
+            let cities_name = ['paris', 'valence', 'lyon','gap'];
+            cities.forEach(async (city, index) => {
+                await fetch(proxyurl +'https://www.wikidata.org/w/api.php?format=json&action=wbgetclaims&property=P18&entity='+ city)
+                    .then(res => res.json())
+                    .then(res => response = res)
+                    .catch(err => cl(err));
+                
+                /* Get image of a research */
+                let photo = response.claims.P18[0].mainsnak.datavalue.value
+
+                $('.photos')
+                    .append($('<h3/>').html(cities_name[index]))
+                    .append($('<img/>', {
+                    src:'https://commons.wikimedia.org/wiki/Special:FilePath/'+ photo +'?width=320 320w',
+                    style: 'background-size: cover;'}))
+            });
+            
+        }
+        console.log('test')
+        get_photos_with_wikidata();
+    </script>
+</html>
